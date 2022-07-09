@@ -1,0 +1,16 @@
+{
+	"compilerOptions": {
+		"esModuleInterop": true,
+		"outDir": "dist",
+		"baseUrl": ".",
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"resolveJsonModule": true,
+		"lib": [
+			"ES2021.String"
+		]
+	},
+	"include": [
+		"./src/**/*.ts"
+	]
+}

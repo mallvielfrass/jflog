@@ -1,0 +1,39 @@
+{
+  "name": "jflog",
+  "version": "1.0.0",
+  "description": "another nodejs logger into files",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mallvielfrass/jflog.git"
+  },
+  "author": "https://github.com/mallvielfrass",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mallvielfrass/jflog/issues"
+  },
+  "homepage": "https://github.com/mallvielfrass/jflog#readme",
+  "dependencies": {
+    "@types/sqlite3": "^3.1.8",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
+    "date-format": "^4.0.11",
+    "dotenv": "^16.0.1",
+    "eslint": "^8.19.0",
+    "nodemon": "^2.0.19",
+    "sqlite3": "^5.0.8"
+  },
+  "devDependencies": {
+    "@babel/preset-typescript": "^7.18.6",
+    "@types/jest": "^28.1.4",
+    "@types/node": "^18.0.3",
+    "jest": "^28.1.2",
+    "ts-jest": "^28.0.5",
+    "typescript": "^4.7.4"
+  }
+}

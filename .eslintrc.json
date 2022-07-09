@@ -1,0 +1,71 @@
+{
+	"env": {
+		"browser": true,
+		"es2021": true
+	},
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended"
+	],
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaVersion": "latest",
+		"sourceType": "module"
+	},
+	"plugins": [
+		"@typescript-eslint"
+	],
+	"rules": {
+		"indent": [
+			"error",
+			"tab"
+		],
+		"no-var": "error",
+		"linebreak-style": [
+			"error",
+			"unix"
+		],
+		"quotes": [
+			"error",
+			"single"
+		],
+		"semi": [
+			"error",
+			"never"
+		],
+		"comma-spacing": [
+			1,
+			{ // Пробелы перед запятой запрещены, а пробелы обязательны после запятой
+				"before": false,
+				"after": true
+			}
+		],
+		"no-multiple-empty-lines": [
+			"error",
+			{
+				"max": 2,
+				"maxEOF": 0
+			}
+		],
+		"no-multi-spaces": 1, // Запрещаем использование нескольких пробелов
+		"no-trailing-spaces": 1, // Запрещаем конечные пробелы
+		"no-whitespace-before-property": 1, // Запрещаем пробелы перед атрибутами
+		"space-before-blocks": [
+			1,
+			"always"
+		], // требуется пробел перед блоком операторов
+		"space-before-function-paren": [
+			1,
+			"never"
+		], // Перед закрытыми скобками функции нет пробелов
+		"space-in-parens": 1, // Не используйте пробелы в круглых скобках
+		"space-infix-ops": 1,
+		"array-bracket-spacing": 1,
+		"object-curly-spacing": [
+			1,
+			"never"
+		], // Запрещаем пробелы после "{" и перед "}" объекта
+		"switch-colon-spacing": 1 
+		 
+	}
+}
