@@ -3,8 +3,10 @@
 import fs from 'fs'
 import path from 'path'
 import format from 'date-format'
+import fastJson from 'fast-json-stringify'
 import 'dotenv/config'
 import { FgGreen, Reset } from './colors'
+const stringify = fastJson({})
 //require('dotenv').config()
 
 export enum logTypes {
@@ -22,13 +24,13 @@ export class Flogger {
 	regx: RegExp
 
 	constructor(relativePathFolder: string) {
-		console.log({ main: require.main.path });
+		//console.log({ main: require.main.path });
 
 		// const absolutePath = pathFolder// `${process.env.MOUNT_PATH_VOLUME}/logs`
 
 		// flog.write(format('yyyy-MM-dd', new Date()))
 		this.absolutePath = path.isAbsolute(relativePathFolder) ? relativePathFolder : path.join(require.main.path, relativePathFolder)
-		console.log({ absolutePath: this.absolutePath })
+		//	console.log({ absolutePath: this.absolutePath })
 		if (!fs.existsSync(this.absolutePath)) {
 			fs.mkdirSync(this.absolutePath)
 		}
@@ -38,11 +40,11 @@ export class Flogger {
 		// flog.write("path:", path)
 		// flog.write("file:", this.file)
 		//  this.regx = new RegExp(`\x1b\\[[0-9]{1,2}m`, 'g')
-		this.regx = new RegExp('\\\\[xu][0]{0,2}1b\\[[0-9]{1,2}m', 'g')
+		//	this.regx = new RegExp('\\\\[xu][0]{0,2}1b\\[[0-9]{1,2}m', 'g') //находит все символы цвета 
 	}
 	clearRegexp(f: string): string {
 
-		const newstr = f.replaceAll(this.regx, '')
+		const newstr = f.replaceAll(this.regx, '')//удаляет все символы цвета 
 
 		return newstr
 	}
@@ -54,35 +56,37 @@ export class Flogger {
 		}
 		return res
 	}
-	async write(message: any, ...optionalParams: any[]) {
 
-		const time: string = format('yyyy-MM-dd hh:mm:ss.SSS', new Date())
-		const date = format(time.split(' ')[0])
-		// flog.write("date:", date)
-		// flog.write("time:", time)
-
-		const msgData = JSON.stringify(message) + ' ' + this.unpack(optionalParams)
-		const msg = `${FgGreen + '[' + time + ']' + Reset} ` + (typeof message === 'string' ? message : JSON.stringify(message)) + ' ' + this.unpack(optionalParams)
-		const cmsg = this.clearRegexp(`[${time}] ` + msgData + '\n')
-		console.log(msg)
-
-		fs.appendFile(this.file + date + '.log', cmsg, function (err) {
-			if (err) {
-				console.log('Write Err:', err)
+	convert(obj: any): string {
+		switch (typeof obj) {
+			case 'string': {
+				return obj
 			}
-			// flog.write("File created!");
-		})
+			case 'number': {
+				return obj.toString()
+			}
+
+			default:
+				return stringify(obj)
+		}
 
 	}
-	async print(typeLog: string, message: any, ...optionalParams: any[]) {
+	write(message: any, ...optionalParams: any[]) {
+		this.print("default", message, ...optionalParams)
+	}
+	print(typeLog: string, message: any, ...optionalParams: any[]) {
 
 		const time: string = format('yyyy-MM-dd hh:mm:ss.SSS', new Date())
 		const date = format(time.split(' ')[0])
 		// flog.write("date:", date)
 		// flog.write("time:", time)
-
-		const msgData = JSON.stringify(message) + ' ' + this.unpack(optionalParams)
-		const msg = `${FgGreen + '[' + time + ']' + Reset} ` + (typeof message === 'string' ? message : JSON.stringify(message)) + ' ' + this.unpack(optionalParams)
+		const firstMsg = this.convert(message)
+		let arg = ""
+		optionalParams.map((x) => {
+			arg += this.convert(x) + " "
+		})
+		const msgData = firstMsg + " " + arg
+		const msg = `${FgGreen + '[' + time + ']' + Reset} ` + firstMsg + ' ' + arg + Reset
 		const cmsg = this.clearRegexp(`[${time}] ` + msgData + '\n')
 		console.log(msg)
 		//	const path = `${process.env.MOUNT_PATH_VOLUME}/logs`
@@ -92,6 +96,7 @@ export class Flogger {
 			}
 			// flog.write("File created!");
 		})
+
 
 	}
 }
