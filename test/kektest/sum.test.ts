@@ -15,4 +15,5 @@ test('print1', () => {
 	flog.print("FFFFFFFFFFF", `9`, "fdfdfdf", 454554, { edd: "fdfdf" }, Reset,)
 	console.log("FddddF", `9`, "fdfdfdf", 454554, { edd: "fdfdf" })
 	expect(1).toBe(1);
+
 })
