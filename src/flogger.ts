@@ -17,7 +17,7 @@ export enum logTypes {
 	panic = 'panic_',
 	service = 'service_'
 }
-export class Flogger {
+export class Jflog {
 	//file: string
 	absolutePath: string
 	//regx: RegExp
