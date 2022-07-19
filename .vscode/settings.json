@@ -1,0 +1,12 @@
+{
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	},
+	"[typescript]": {
+		"editor.formatOnPaste": true,
+		"editor.formatOnSave": true,
+		// s "editor.defaultFormatter": "vscode.typescript-language-features",
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
+	},
+	"editor.defaultFormatter": "dbaeumer.vscode-eslint",
+}
