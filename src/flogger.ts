@@ -4,7 +4,7 @@ import fs from 'fs'
 import path from 'path'
 import format from 'date-format'
 import fastJson from 'fast-json-stringify'
-import { FgGreen, Reset } from './colors'
+import {FgGreen, Reset} from './colors'
 const stringify = fastJson({})
 //require('dotenv').config()
 
@@ -17,7 +17,7 @@ export enum logTypes {
 	panic = 'panic_',
 	service = 'service_'
 }
-export class Jflog {
+export default class Jflog {
 	//file: string
 	absolutePath: string
 	//regx: RegExp
@@ -39,12 +39,12 @@ export class Jflog {
 		// flog.write("path:", path)
 		// flog.write("file:", this.file)
 		//  this.regx = new RegExp(`\x1b\\[[0-9]{1,2}m`, 'g')
-		//	this.regx = new RegExp('\\\\[xu][0]{0,2}1b\\[[0-9]{1,2}m', 'g') //находит все символы цвета 
+		//	this.regx = new RegExp('\\\\[xu][0]{0,2}1b\\[[0-9]{1,2}m', 'g') //находит все символы цвета
 	}
 
 	// clearRegexp(f: string): string {
 
-	// 	const newstr = f.replaceAll(this.regx, '')//удаляет все символы цвета 
+	// 	const newstr = f.replaceAll(this.regx, '')//удаляет все символы цвета
 
 	// 	return newstr
 	// }
@@ -59,20 +59,20 @@ export class Jflog {
 
 	convert(obj: any): string {
 		switch (typeof obj) {
-			case 'string': {
-				return obj
-			}
-			case 'number': {
-				return obj.toString()
-			}
+		case 'string': {
+			return obj
+		}
+		case 'number': {
+			return obj.toString()
+		}
 
-			default:
-				return stringify(obj)
+		default:
+			return stringify(obj)
 		}
 
 	}
 	write(message: any, ...optionalParams: any[]) {
-		this.print("default", message, ...optionalParams)
+		this.print('default', message, ...optionalParams)
 	}
 	print(typeLog: string, message: any, ...optionalParams: any[]) {
 
@@ -81,16 +81,16 @@ export class Jflog {
 		// flog.write("date:", date)
 		// flog.write("time:", time)
 		const firstMsg = this.convert(message)
-		let arg = ""
+		let arg = ''
 		optionalParams.map((x) => {
-			arg += this.convert(x) + " "
+			arg += this.convert(x) + ' '
 		})
-		const msgData = firstMsg + " " + arg
+		const msgData = firstMsg + ' ' + arg
 		const msg = `${FgGreen + '[' + time + ']' + Reset} ` + firstMsg + ' ' + arg + Reset
 		const cmsg = `[${time}] ` + msgData + '\n'
 		console.log(msg)
 		//	const path = `${process.env.MOUNT_PATH_VOLUME}/logs`
-		fs.appendFile(this.absolutePath + '/' + typeLog + '_' + date + '.log', cmsg, function (err) {
+		fs.appendFile(this.absolutePath + '/' + typeLog + '_' + date + '.log', cmsg, function(err) {
 			if (err) {
 				console.log('Write Err:', err)
 			}
@@ -100,3 +100,4 @@ export class Jflog {
 
 	}
 }
+exports.Jflog = Jflog

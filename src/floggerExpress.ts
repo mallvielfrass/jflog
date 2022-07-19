@@ -1,13 +1,12 @@
-import { Jflog } from "./flogger";
+import Jflog from './flogger'
 import express from 'express'
-import useragent from 'express-useragent';
-import { getClientIp } from '@supercharge/request-ip';
+import useragent from 'express-useragent'
+import { getClientIp } from '@supercharge/request-ip'
 export class ExpressServer {
 	private jsflog: Jflog
 	constructor(jflog: Jflog) {
 		this.jsflog = jflog
 	}
-
 
 
 }
@@ -19,7 +18,7 @@ export class ExpressApiLogger {
 		//	this.seed = seedToken
 	}
 	private generateHeaderString(userAgentsRaw: string): string {
-		let heads = ""
+		const heads = ''
 		try {
 			const userAgents = useragent.parse(userAgentsRaw)
 			//	console.log({ userAgents })
@@ -31,17 +30,17 @@ export class ExpressApiLogger {
 			const source = userAgents.source
 			return `${browser} ${version} ${os} ${platform} ${source}`
 		} catch (error) {
-			this.jsflog.print("error", error.stack)
+			this.jsflog.print('error', error.stack)
 		}
 		return heads
 	}
 	private parseHeaders(request: express.Request): string {
 		if (!request.headers) {
-			return ""
+			return ''
 		}
 		const userAgentsRawExist = Object.prototype.hasOwnProperty.call(request.headers, 'user-agent')
 		if (!userAgentsRawExist) {
-			return ""
+			return ''
 		}
 		//return userAgentsRaw
 		const rw = this.generateHeaderString(request.headers['user-agent'])
@@ -67,7 +66,7 @@ export class ExpressApiLogger {
 		// const platform = userAgents.platform
 
 		// const source = userAgents.source
-		this.jsflog.print("api", `${method} ${url} ${ip} ${msgHeaders}`)
+		this.jsflog.print('api', `${method} ${url} ${ip} ${msgHeaders}`)
 		return next()
 
 	}
